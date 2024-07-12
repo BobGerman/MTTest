@@ -27,10 +27,10 @@
     "composeExtensions": [],
     "configurableTabs": [
         {
-            "configurationUrl": "https://www.foo.com/config",
+            "configurationUrl": "${{TAB_ENDPOINT}}/index.html#/tabConfig",
             "canUpdateConfiguration": true,
             "scopes": [
-                "groupChat",
+                "groupchat",
                 "team"
             ],
             "context": [
