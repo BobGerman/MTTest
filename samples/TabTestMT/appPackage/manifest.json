@@ -15,12 +15,12 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "TabTest${{APP_NAME_SUFFIX}}",
-        "full": "Full name for TabTest"
+        "short": "TabTestMT${{APP_NAME_SUFFIX}}",
+        "full": "Multitenant Tab Test"
     },
     "description": {
-        "short": "Short description of TabTest",
-        "full": "Full description of TabTest"
+        "short": "Multitenant Tab Test",
+        "full": "Multitenant Tab Test"
     },
     "accentColor": "#FFFFFF",
     "bots": [],
