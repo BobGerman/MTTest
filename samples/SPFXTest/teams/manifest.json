@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.8",
+  "packageName": "SPFXHelloWorld",
+  "id": "82104a16-54a3-4245-afda-eb0648e24798",
+  "version": "1.8.0",
+  "developer": {
+    "name": "Sympraxis Consulting",
+    "websiteUrl": "https://sympraxisconsulting.com",
+    "privacyUrl": "https://symp.info/privacyUrl",
+    "termsOfUseUrl": "https://symp.info/termsOfUseUrl",
+    "mpnId": "SYMPRAXIS"
+  },
+  "name": {
+    "short": "SPFXHelloWorld"
+  },
+  "description": {
+    "short": "SPFXHelloWorld",
+    "full": "SPFXHelloWorld"
+  },
+  "icons": {
+    "outline": "82104a16-54a3-4245-afda-eb0648e24798_outline.png",
+    "color": "82104a16-54a3-4245-afda-eb0648e24798_color.png"
+  },
+  "accentColor": "#004578",
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://{teamSiteDomain}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest=/_layouts/15/teamshostedapp.aspx%3Fteams%26componentId=82104a16-54a3-4245-afda-eb0648e24798",
+      "canUpdateConfiguration": false,
+      "scopes": [
+        "team",
+        "groupchat"
+      ],
+      "context": [
+        "channelTab",
+        "privateChatTab",
+        "meetingSidePanel",
+        "meetingDetailsTab",
+        "meetingChatTab"
+      ]
+    }
+  ],
+  "validDomains": [
+    "*.login.microsoftonline.com",
+    "*.sharepoint.com",
+    "resourceseng.blob.core.windows.net"
+  ],
+  "webApplicationInfo": {
+    "resource": "https://{teamSiteDomain}",
+    "id": "00000003-0000-0ff1-ce00-000000000000"
+  }
+}

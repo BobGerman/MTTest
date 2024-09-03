@@ -5,4 +5,5 @@ export interface ISpfxHelloWorldProps {
   hasTeamsContext: boolean;
   userDisplayName: string;
   loginName: string;
+  results: string[];
 }

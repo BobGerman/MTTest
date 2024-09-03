@@ -3,16 +3,16 @@
   "solution": {
     "name": "spfx-test-client-side-solution",
     "id": "6b4a7a0f-275e-449a-9271-accf07ddaa90",
-    "version": "1.0.0.0",
+    "version": "1.8.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
     "developer": {
-      "name": "",
-      "websiteUrl": "",
-      "privacyUrl": "",
-      "termsOfUseUrl": "",
-      "mpnId": "Undefined-1.19.0"
+      "name": "Sympraxis Consulting",
+      "websiteUrl": "https://sympraxisconsulting.com",
+      "privacyUrl": "https://symp.info/privacyUrl",
+      "termsOfUseUrl": "https://symp.info/termsOfUseUrl",
+      "mpnId": "SYMPRAXIS"
     },
     "metadata": {
       "shortDescription": {
@@ -31,6 +31,12 @@
         "description": "The feature that activates elements of the spfx-test solution.",
         "id": "2becced6-633d-4b15-92b0-552031830940",
         "version": "1.0.0.0"
+      }
+    ],
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.ReadBasic.All"
       }
     ]
   },

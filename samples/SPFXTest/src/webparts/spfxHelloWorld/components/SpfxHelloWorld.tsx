@@ -27,6 +27,15 @@ export default class SpfxHelloWorld extends React.Component<ISpfxHelloWorldProps
           <p>
             Hello {this.props.userDisplayName} ({loginName})!
           </p>
+          <h3>REST call results</h3>
+          <ol>
+            {this.props.results?.length > 0 && this.props.results.map((r, idx) => {
+              return (<li key={idx} >{r}</li>);
+            })}
+            {(!this.props.results || this.props.results.length < 1) &&
+              <p>No results to report!</p>
+            }
+          </ol>
         </div>
       </section>
     );

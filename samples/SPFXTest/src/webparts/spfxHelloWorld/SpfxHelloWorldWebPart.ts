@@ -1,3 +1,4 @@
+/* eslint-disable no-void */
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
@@ -11,17 +12,84 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import * as strings from 'SpfxHelloWorldWebPartStrings';
 import SpfxHelloWorld from './components/SpfxHelloWorld';
 import { ISpfxHelloWorldProps } from './components/ISpfxHelloWorldProps';
+import { spfi, SPFI, SPFx as spSPFx } from '@pnp/sp';
+import { graphfi, GraphFI, SPFx as graphSPFx } from '@pnp/graph';
+
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+import "@pnp/graph/users";
 
 export interface ISpfxHelloWorldWebPartProps {
   description: string;
 }
 
 export default class SpfxHelloWorldWebPart extends BaseClientSideWebPart<ISpfxHelloWorldWebPartProps> {
-
+  private LOG_SOURCE = "SpfxHelloWorldWebPart";
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
+  private _sp: SPFI;
+  private _graph: GraphFI;
+  private _results: string[] = [];
+
+  public async onInit(): Promise<void> {
+    this._sp = spfi().using(spSPFx(this.context));
+    this._graph = graphfi().using(graphSPFx(this.context));
+    const message = await this._getEnvironmentMessage();
+    this._environmentMessage = message;
+
+    this._results = [];
+    // Call SPGet
+    const testSPGetResult = await this._testSPGet();
+    this._results.push(`_testSPGet: ${testSPGetResult}`);
+
+    // Call SPPost
+    const testSPPostResult = await this._testSPPost();
+    this._results.push(`_testSPPost: ${testSPPostResult}`);
+
+    // Call Graph
+    const testGraphResult = await this._testGraph();
+    this._results.push(`_testGraph: ${testGraphResult}`);
+  }
+
+  private _testSPGet = async (): Promise<boolean> =>  {
+    let retVal = false;
+    try{
+      const web = await this._sp.web();
+      retVal = true;
+      console.log(this.LOG_SOURCE, "(_testSPGet)", web);
+    }catch(err){
+      console.error(this.LOG_SOURCE, "(_testSPGet)", err);
+    }
+    return retVal;
+  }
+
+  private _testSPPost = async (): Promise<boolean> =>  {
+    let retVal = false;
+    try{
+      const web = await this._sp.web.lists.getByTitle("Test").items.add({Title: `Testing ${this.LOG_SOURCE} - ${this.context.pageContext.user.loginName}`});
+      retVal = true;
+      console.log(this.LOG_SOURCE, "(_testSPPost)", web);
+    }catch(err){
+      console.error(this.LOG_SOURCE, "(_testSPPost)", err);
+    }
+    return retVal;
+  }
+
+  private _testGraph = async (): Promise<boolean> =>  {
+    let retVal = false;
+    try{
+      const me = await this._graph.me();
+      retVal = true;
+      console.log(this.LOG_SOURCE, "(_testGraph)", me);
+    }catch(err){
+      console.error(this.LOG_SOURCE, "(_testGraph)", err);
+    }
+    return retVal;
+  }
 
   public render(): void {
+
     const element: React.ReactElement<ISpfxHelloWorldProps> = React.createElement(
       SpfxHelloWorld,
       {
@@ -30,20 +98,13 @@ export default class SpfxHelloWorldWebPart extends BaseClientSideWebPart<ISpfxHe
         environmentMessage: this._environmentMessage,
         hasTeamsContext: !!this.context.sdks.microsoftTeams,
         userDisplayName: this.context.pageContext.user.displayName,
-        loginName: this.context.pageContext.user.loginName
+        loginName: this.context.pageContext.user.loginName,
+        results: this._results
       }
     );
 
     ReactDom.render(element, this.domElement);
   }
-
-  protected onInit(): Promise<void> {
-    return this._getEnvironmentMessage().then(message => {
-      this._environmentMessage = message;
-    });
-  }
-
-
 
   private _getEnvironmentMessage(): Promise<string> {
     if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
